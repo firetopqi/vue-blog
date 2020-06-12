@@ -4,6 +4,7 @@ import store from './store'
 import VueRouter from 'vue-router'
 import router from './router'
 import AtComponents from 'at-ui'
+import '@/core/use.js'
 import 'at-ui-style'    // 引入组件样式
 Vue.use(VueRouter)
 Vue.use(AtComponents)

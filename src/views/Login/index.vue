@@ -31,9 +31,16 @@ export default {
         name: this.inputValue,
         password: this.password,
       };
-      postLogInfo(form).then(res => {
-        console.log(res);
-      });
+      postLogInfo(form)
+        .then(res => {
+          if (res.code === "0") {
+            localStorage.setItem("token", res.token);
+            this.$goToRedirect(this.$route);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
   },
 };

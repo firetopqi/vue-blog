@@ -1,10 +1,39 @@
 const express = require('express')
+const bodyParser = require('body-parser');
+// const { reject } = require('core-js/fn/promise');
 const app = express()
+const jwt = require('./module/jwt')
+let token = ""
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.get('/', (req, res) => {
   res.send('hello world')
 })
 app.post('/login', (req, res) => {
-  res.send('hey')
+  new Promise((resolve, reject) => {
+    //jwt
+    const jwts = new jwt
+    token = jwts.generateToken(req.body)
+    // 根据用户名查询用户
+    if (req.body.name == "admin") {
+      resolve(req.body.name);
+    } else {
+      reject("未知错误");
+    }
+  }).then(() => {
+
+    // 返回数据
+    res.json({
+      code: "0",
+      message: "登录成功！",
+      token,
+      data: {
+        // id: newRes[0].id,
+        // userName: newRes[0].user_name
+      }
+    });
+    res.end();
+  })
 })
 //处理请求跨域
 

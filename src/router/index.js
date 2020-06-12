@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Log from '@/views/Login/index.vue'
 import index from '@/views/page'
+let flag = true
 
 Vue.use(VueRouter)
 const routes = [
@@ -14,15 +15,24 @@ const router = new VueRouter({
   mode: "history"   //去掉#
 })
 router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-    if (sessionStorage.getItem('token')) { // 判断本地是否存在access_token
-      next('/')
+  // 模拟登陆状态
+  const isAuth = localStorage.getItem('token') ? true : false
+  if (isAuth && to.meta.requireAuth) {
+    if (flag) {
+      flag = false
+      next({ path: '/' });
     } else {
-      // 未登录,跳转到登陆页面，并且带上 将要去的地址，方便登陆后跳转。
-      next('/login')
+      next()
     }
   } else {
-    next()
+    if (flag) {
+      flag = false
+      next({ path: '/login' });
+    } else {
+      next()
+    }
   }
+
+
 })
 export default router

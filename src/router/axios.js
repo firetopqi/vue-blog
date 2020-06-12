@@ -1,15 +1,8 @@
 import axios from 'axios'
-const servies = axios.create({
-  // headers: {
-  //   'content-type': 'application/json;charst=UTF-8',
-  //   'token': ''
-  // },
-  baseURL: '/api',
-  withCredentials: true,
-  timeout: 5000
-})
+axios.defaults.timeout = 30000
+axios.defaults.baseURL = '/api'
 // 添加请求拦截器
-servies.interceptors.request.use(config => {
+axios.interceptors.request.use(config => {
   // 在发送请求之前做某事，比如说 设置token
   // config.headers['token'] = 'token';
   const accessToken = "xxxx"
@@ -21,15 +14,12 @@ servies.interceptors.request.use(config => {
 });
 
 // 添加响应拦截器
-servies.interceptors.response.use(response => {
+axios.interceptors.response.use(response => {
   const res = response.data;
-  // 如果返回的状态不是200 就主动报错
-  if (res.state != 200) {
-    return Promise.reject(res.message || 'error')
-  }
-  return response;
+  // console.log(res, res.state)
+  return res;
 }, error => {
-  return Promise.reject(error.response.data); // 返回接口返回的错误信息
+  return Promise.reject(error.response); // 返回接口返回的错误信息
 })
 
-export default servies
+export default axios
