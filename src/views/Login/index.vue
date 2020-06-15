@@ -70,6 +70,7 @@ export default {
     border: 1px solid #ccc;
     padding: 20px 10px;
     background-color: rgba(212, 235, 203, 0.3);
+    text-align: center;
   }
   .input-item {
     display: flex;

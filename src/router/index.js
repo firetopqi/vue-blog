@@ -6,8 +6,18 @@ let flag = true
 
 Vue.use(VueRouter)
 const routes = [
-  { path: "/login", name: 'login', component: Log, meta: { requireAuth: false } },
-  { path: '/', name: 'index', component: index, meta: { requireAuth: true } }
+  {
+    path: "/login",
+    name: 'login',
+    component: Log,
+    meta: { requireAuth: false, index: 0 }
+  },
+  {
+    path: '/',
+    name: 'index',
+    component: index,
+    meta: { requireAuth: true, index: 1 }
+  }
 ]
 
 const router = new VueRouter({
