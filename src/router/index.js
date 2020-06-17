@@ -8,15 +8,55 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: "/login",
-    name: 'login',
+    name: '登录页',
     component: Log,
     meta: { requireAuth: false, index: 0 }
   },
   {
     path: '/',
-    name: 'index',
+    name: '主页',
     component: index,
-    meta: { requireAuth: true, index: 1 }
+    meta: { requireAuth: true, index: 1 },
+    redirect: '/home',
+    children: [
+      {
+        path: 'home',
+        meta: { requireAuth: true, index: 1 },
+        component: () => import('@/views/page/home.vue')
+      },
+      {
+        path: 'page1',
+        name: '主题一',
+        icon: 'icon-triangle',
+        meta: { requireAuth: true, index: 1 },
+        children: [
+          {
+            path: 'page2',
+            name: '主题二er',
+            meta: { requireAuth: true, index: 1 },
+            component: () => import('@/views/admin/resigor.vue')
+          },
+          {
+            path: 'page3',
+            name: '主题三san',
+            meta: { requireAuth: true, index: 1 },
+            component: () => import('@/views/admin/setting.vue')
+          }
+        ],
+      },
+      {
+        path: 'page2',
+        name: '主题二er',
+        meta: { requireAuth: true, index: 1 },
+        component: () => import('@/views/admin/resigor.vue')
+      },
+      {
+        path: 'page3',
+        name: '主题三san',
+        meta: { requireAuth: true, index: 1 },
+        component: () => import('@/views/admin/setting.vue')
+      }
+    ]
   }
 ]
 
